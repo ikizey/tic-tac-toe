@@ -1,0 +1,12 @@
+{
+  "name": "ttt-fullstack",
+  "version": "1.0.0",
+  "description": "tic-tac-toe client/server",
+  "scripts": {
+    "start": "pnpm --stream -r start",
+    "start:dev": "pnpm --stream -r run start:dev"
+  },
+  "keywords": [],
+  "author": "ikizey@icloud.com",
+  "license": "ISC"
+}
