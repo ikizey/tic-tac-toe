@@ -27,10 +27,6 @@ const useLobby = () => {
 
   const navigate = useNavigate();
 
-  const inLobby = () => {
-    socket.emit(LOBBY_CLIENT_EVENT.IN_LOBBY, { playerUid, playerName });
-  };
-
   const goQueue = () => {
     socket.emit(LOBBY_CLIENT_EVENT.IN_QUEUE, { playerUid, playerName });
   };
@@ -40,6 +36,8 @@ const useLobby = () => {
   };
 
   useEffect(() => {
+    socket.emit(LOBBY_CLIENT_EVENT.IN_LOBBY, { playerUid, playerName });
+
     socket.on(LOBBY_SERVER_EVENT.NO_NAME, () => {
       navigate('/');
     });
