@@ -24,7 +24,7 @@ const PlayerContextProvider = ({ children }) => {
 
   useEffect(() => {
     const playerId = localStorage.getItem(PLAYER.UID);
-    if (playerId) {
+    if (!playerId) {
       const nano = nanoid();
       localStorage.setItem(PLAYER.UID, nano);
       setPlayerUid(nano);
