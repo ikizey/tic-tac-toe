@@ -1,12 +1,4 @@
-import {
-  Button,
-  Center,
-  Container,
-  HStack,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Button, Container, HStack, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 import useLobby from '../hooks/useLobby';
 
