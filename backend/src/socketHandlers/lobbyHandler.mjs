@@ -29,7 +29,6 @@ export const lobbyHandler = (client, io) => {
     client.name = playerName;
     client.uid = playerUid;
     clientController.addClient(client);
-    client.emit(LOBBY_SERVER_EVENT.IN_QUEUE);
     io.emit(LOBBY_SERVER_EVENT.TOTAL_PLAYERS, {
       totalPlayers: clientController.totalPlayers,
     });
