@@ -18,7 +18,7 @@ const Home = () => {
     useContext(PlayerContext);
   const navigate = useNavigate();
 
-  const goQueue = () => {
+  const goLobby = () => {
     navigate('/queue');
   };
 
@@ -50,7 +50,7 @@ const Home = () => {
           isDisabled={!playerHasValidName()}
           colorScheme='purple'
           size='lg'
-          onClick={goQueue}
+          onClick={goLobby}
         >
           Enter Game
         </Button>
