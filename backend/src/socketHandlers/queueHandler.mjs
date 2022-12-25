@@ -1,4 +1,4 @@
-import { queueController } from '../controllers/queueController.mjs';
+import { queueController } from '../controllers/QueueController.mjs';
 
 const QUEUE_EVENTS = Object.freeze({
   ENTER_QUEUE: 'enter-queue',
