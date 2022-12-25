@@ -20,10 +20,11 @@ const EMIT = Object.freeze({
 });
 
 const useLobby = () => {
+  const { playerUid, playerName } = useContext(PlayerContext);
+
   const [totalPlayers, setTotalPlayers] = useState(0);
   const [totalGames, setTotalGames] = useState(0);
   const [isInQueue, setIsInQueue] = useState(false);
-  const { playerUid, playerName } = useContext(PlayerContext);
 
   const navigate = useNavigate();
 
