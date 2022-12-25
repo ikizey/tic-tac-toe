@@ -19,7 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const goLobby = () => {
-    navigate('/queue');
+    navigate('/lobby');
   };
 
   return (
