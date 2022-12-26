@@ -1,6 +1,6 @@
 import { HStack, Text } from '@chakra-ui/react';
 
-const OnlineStats = (totalPlayers, totalGames) => {
+const OnlineStats = ({ totalPlayers, totalGames }) => {
   return (
     <HStack spacing={5}>
       <Text>Total players connected: {totalPlayers}</Text>
