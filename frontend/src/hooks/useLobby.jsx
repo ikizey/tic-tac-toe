@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { socket } from '../socket.config';
 import { PlayerContext } from '../store/playerContext';
 
-const LOBBY_SERVER_EVENT = Object.freeze({
+const SERVER_EVENT = Object.freeze({
   NO_NAME: 'noName',
   TOTAL_PLAYERS: 'totalPlayers',
   TOTAL_GAMES: 'totalGames',
@@ -12,9 +12,10 @@ const LOBBY_SERVER_EVENT = Object.freeze({
   OPPONENT_FOUND: 'opponentFound',
 });
 
-const LOBBY_CLIENT_EVENT = Object.freeze({
+const CLIENT_EVENT = Object.freeze({
   IN_LOBBY: 'inLobby',
-  IN_QUEUE: 'inQueue',
+  ENTER_QUEUE: 'enterQueue',
+  LEAVE_QUEUE: 'leaveQueue',
   OPPONENT_OK: 'opponentOK',
 });
 
@@ -27,55 +28,60 @@ const useLobby = () => {
 
   const navigate = useNavigate();
 
-  const goQueue = () => {
-    socket.emit(LOBBY_CLIENT_EVENT.IN_QUEUE, { playerUid, playerName });
+  const enterQueue = () => {
+    socket.emit(CLIENT_EVENT.ENTER_QUEUE, { playerUid, playerName });
+  };
+
+  const leaveQueue = () => {
+    socket.emit(CLIENT_EVENT.LEAVE_QUEUE, { playerUid, playerName });
   };
 
   const opponentOK = () => {
-    socket.emit(LOBBY_CLIENT_EVENT.OPPONENT_OK, {});
+    socket.emit(CLIENT_EVENT.OPPONENT_OK, {});
   };
 
   useEffect(() => {
-    socket.emit(LOBBY_CLIENT_EVENT.IN_LOBBY, { playerUid, playerName });
+    socket.emit(CLIENT_EVENT.IN_LOBBY, { playerUid, playerName });
 
-    socket.on(LOBBY_SERVER_EVENT.NO_NAME, () => {
+    socket.on(SERVER_EVENT.NO_NAME, () => {
       navigate('/');
     });
 
-    socket.on(LOBBY_SERVER_EVENT.TOTAL_PLAYERS, ({ totalPlayers }) => {
+    socket.on(SERVER_EVENT.TOTAL_PLAYERS, ({ totalPlayers }) => {
       setTotalPlayers(totalPlayers);
     });
 
-    socket.on(LOBBY_SERVER_EVENT.TOTAL_GAMES, ({ totalGames }) => {
+    socket.on(SERVER_EVENT.TOTAL_GAMES, ({ totalGames }) => {
       setTotalGames(totalGames);
     });
 
-    socket.on(LOBBY_SERVER_EVENT.IN_QUEUE, () => {
+    socket.on(SERVER_EVENT.IN_QUEUE, () => {
       setIsInQueue(true);
     });
 
-    socket.on(LOBBY_SERVER_EVENT.QUEUE_ERROR, () => {
+    socket.on(SERVER_EVENT.QUEUE_ERROR, () => {
       setIsInQueue(false);
       //TODO! show some message
     });
-    socket.on(LOBBY_SERVER_EVENT.OPPONENT_FOUND, () => {
+    socket.on(SERVER_EVENT.OPPONENT_FOUND, () => {
       opponentOK();
     });
 
     return () => {
-      socket.off(LOBBY_SERVER_EVENT.NO_NAME);
-      socket.off(LOBBY_SERVER_EVENT.TOTAL_PLAYERS);
-      socket.off(LOBBY_SERVER_EVENT.TOTAL_GAMES);
-      socket.off(LOBBY_SERVER_EVENT.IN_QUEUE);
-      socket.off(LOBBY_SERVER_EVENT.QUEUE_ERROR);
-      socket.off(LOBBY_SERVER_EVENT.OPPONENT_FOUND);
+      socket.off(SERVER_EVENT.NO_NAME);
+      socket.off(SERVER_EVENT.TOTAL_PLAYERS);
+      socket.off(SERVER_EVENT.TOTAL_GAMES);
+      socket.off(SERVER_EVENT.IN_QUEUE);
+      socket.off(SERVER_EVENT.QUEUE_ERROR);
+      socket.off(SERVER_EVENT.OPPONENT_FOUND);
     };
   }, []);
 
   return {
     totalPlayers,
     totalGames,
-    goQueue,
+    enterQueue,
+    leaveQueue,
     isInQueue,
   };
 };
