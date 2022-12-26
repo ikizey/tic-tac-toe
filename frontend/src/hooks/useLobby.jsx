@@ -8,15 +8,14 @@ const SERVER_EVENT = Object.freeze({
   TOTAL_PLAYERS: 'totalPlayers',
   TOTAL_GAMES: 'totalGames',
   IN_QUEUE: 'inQueue',
+  OUT_QUEUE: 'outQueue',
   QUEUE_ERROR: 'queueError',
-  OPPONENT_FOUND: 'opponentFound',
 });
 
 const CLIENT_EVENT = Object.freeze({
   IN_LOBBY: 'inLobby',
   ENTER_QUEUE: 'enterQueue',
   LEAVE_QUEUE: 'leaveQueue',
-  OPPONENT_OK: 'opponentOK',
 });
 
 const useLobby = () => {
@@ -34,10 +33,6 @@ const useLobby = () => {
 
   const leaveQueue = () => {
     socket.emit(CLIENT_EVENT.LEAVE_QUEUE, { playerUid, playerName });
-  };
-
-  const opponentOK = () => {
-    socket.emit(CLIENT_EVENT.OPPONENT_OK, {});
   };
 
   useEffect(() => {
@@ -63,8 +58,9 @@ const useLobby = () => {
       setIsInQueue(false);
       //TODO! show some message
     });
-    socket.on(SERVER_EVENT.OPPONENT_FOUND, () => {
-      opponentOK();
+
+    socket.on(SERVER_EVENT.OUT_QUEUE, () => {
+      setIsInQueue(false);
     });
 
     return () => {
@@ -73,7 +69,7 @@ const useLobby = () => {
       socket.off(SERVER_EVENT.TOTAL_GAMES);
       socket.off(SERVER_EVENT.IN_QUEUE);
       socket.off(SERVER_EVENT.QUEUE_ERROR);
-      socket.off(SERVER_EVENT.OPPONENT_FOUND);
+      socket.off(SERVER_EVENT.OUT_QUEUE);
     };
   }, []);
 
