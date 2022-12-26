@@ -3,7 +3,8 @@ import React from 'react';
 import useLobby from '../hooks/useLobby';
 
 const Lobby = () => {
-  const { totalPlayers, totalGames, goQueue, isInQueue } = useLobby();
+  const { totalPlayers, totalGames, enterQueue, leaveQueue, isInQueue } =
+    useLobby();
 
   return (
     <Container centerContent>
@@ -14,12 +15,11 @@ const Lobby = () => {
           <Text>Total game sessions: {totalGames}</Text>
         </HStack>
         <Button
-          isDisabled={isInQueue}
           colorScheme='purple'
           size='lg'
-          onClick={goQueue}
+          onClick={isInQueue ? leaveQueue : enterQueue}
         >
-          Enter Game
+          {isInQueue ? 'Leave' : 'Enter'} Queue
         </Button>
       </VStack>
     </Container>
