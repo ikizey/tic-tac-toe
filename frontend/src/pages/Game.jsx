@@ -29,7 +29,7 @@ const Game = () => {
           playerName={playerName}
           opponentName={opponentName}
         />
-        <Grid />
+        <Grid moves={moves} makeMove={makeMove} />
         <EndGame isWinner={isWinner} concede={concede} leave={leave} />
       </VStack>
     </Container>
