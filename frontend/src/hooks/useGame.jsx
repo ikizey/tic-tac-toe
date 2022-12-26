@@ -20,7 +20,7 @@ export const useGame = () => {
 
   const [opponentName, setOpponentName] = useState('unknown');
   const [opponentID, setOpponentID] = useState('unknown');
-  const [isWinner, setIsWinner] = useState(undefined);
+  const [isWinner, setIsWinner] = useState(null);
   const [moves, setMoves] = useState([''.repeat(8)]);
   const [isPlayerTurn, setIsPlayerTurn] = useState(false);
 
@@ -29,7 +29,7 @@ export const useGame = () => {
   const reset = () => {
     setOpponentName('unknown');
     setOpponentID('unknown');
-    setIsWinner(undefined);
+    setIsWinner(null);
     setMoves([''.repeat(8)]);
     setIsPlayerTurn(false);
   };
@@ -68,9 +68,8 @@ export const useGame = () => {
       setMoves(moves);
     });
     socket.on(SERVER_EVENT.GAME_OVER, ({ playerUid: pUid }) => {
-      if (pUid === playerUid) {
-        setIsWinner(pUid === playerUid);
-      }
+      setIsWinner(pUid === undefined ? pUid : pUid === playerUid);
+      setIsPlayerTurn(false);
     });
 
     return () => {
