@@ -28,6 +28,8 @@ const PlayerContextProvider = ({ children }) => {
       const nano = nanoid();
       localStorage.setItem(PLAYER.UID, nano);
       setPlayerUid(nano);
+    } else {
+      setPlayerUid(playerId);
     }
     setPlayerName(localStorage.getItem(PLAYER.NAME) || '');
   }, []);
