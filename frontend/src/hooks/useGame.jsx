@@ -6,6 +6,7 @@ import { PlayerContext } from '../store/playerContext';
 const CLIENT_EVENT = Object.freeze({
   MOVE: 'move',
   CONCEDE: 'concede',
+  LEAVE: 'leave',
 });
 
 const SERVER_EVENT = Object.freeze({
@@ -41,6 +42,10 @@ export const useGame = () => {
   const concede = () => {
     socket.emit(CLIENT_EVENT.CONCEDE, {});
     navigate('/lobby');
+  };
+
+  const leave = () => {
+    socket.emit(CLIENT_EVENT.LEAVE, {});
   };
 
   useEffect(() => {
@@ -87,6 +92,7 @@ export const useGame = () => {
     moves,
     isPlayerTurn,
     concede,
+    leave,
     makeMove,
   };
 };
