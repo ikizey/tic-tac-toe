@@ -7,7 +7,6 @@ const SERVER_EVENT = Object.freeze({
   TURN: 'turn',
   MOVES: 'moves',
   GAME_OVER: 'gameOver',
-  CONCEDED: 'conceded',
 });
 
 const MARK = Object.freeze({
@@ -37,6 +36,10 @@ export class GameController {
     return client.uid === this.#game.currentPlayer.uid;
   };
 
+  #killGame = () => {
+    this.#game = null;
+  };
+
   startGame = () => {
     this.#announce(SERVER_EVENT.INTRODUCTION, {
       player1Uid: this.#players[0].uid,
@@ -52,6 +55,7 @@ export class GameController {
 
   makeMove = (client, index) => {
     if (!this.#isCurrentPlayer(client)) return;
+    if (this.#game.gameIsOver) return;
 
     this.#game.makeMove(index);
     const { p1, p2 } = this.#game.moves;
@@ -64,10 +68,15 @@ export class GameController {
     });
     this.#announce(SERVER_EVENT.MOVES, { moves });
 
+    this.#announce(SERVER_EVENT.TURN, {
+      playerUid: this.#game.currentPlayer.uid,
+    });
+
     if (this.#game.gameIsOver) {
       this.#announce(SERVER_EVENT.GAME_OVER, {
         playerUid: this.#game.winnerUid,
       });
+      this.#killGame();
     }
   };
 
@@ -75,5 +84,6 @@ export class GameController {
     if (this.#game.gameIsOver) return;
     this.#game.concede(client);
     this.#announce(SERVER_EVENT.GAME_OVER, { playerUid: this.#game.winnerUid });
+    this.#killGame();
   };
 }
