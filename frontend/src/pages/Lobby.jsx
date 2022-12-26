@@ -10,6 +10,11 @@ const Lobby = () => {
     <Container centerContent>
       <VStack align='center' spacing={5} height='100vh'>
         //TODO ** for some reason it's not centered vertically
+        {isInQueue && (
+          <Text colorScheme='purple' size='md'>
+            Waiting for opponent...
+          </Text>
+        )}
         <HStack spacing={5}>
           <Text>Total players connected: {totalPlayers}</Text>
           <Text>Total game sessions: {totalGames}</Text>
