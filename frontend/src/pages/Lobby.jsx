@@ -1,6 +1,7 @@
-import { Button, Container, HStack, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { Button, Container, HStack, Text, VStack } from '@chakra-ui/react';
 import useLobby from '../hooks/useLobby';
+import InQueue from '../components/InQueue';
 
 const Lobby = () => {
   const { totalPlayers, totalGames, enterQueue, leaveQueue, isInQueue } =
@@ -10,11 +11,7 @@ const Lobby = () => {
     <Container centerContent>
       <VStack align='center' spacing={5} height='100vh'>
         //TODO ** for some reason it's not centered vertically
-        {isInQueue && (
-          <Text colorScheme='purple' size='md'>
-            Waiting for opponent...
-          </Text>
-        )}
+        <InQueue isInQueue={isInQueue} />
         <HStack spacing={5}>
           <Text>Total players connected: {totalPlayers}</Text>
           <Text>Total game sessions: {totalGames}</Text>
