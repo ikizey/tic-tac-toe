@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container, Grid, VStack } from '@chakra-ui/react';
+import { Container, VStack } from '@chakra-ui/react';
 import { useGame } from '../hooks/useGame';
 import { PlayerContext } from '../store/playerContext';
 import EndGame from '../components/EndGame';
