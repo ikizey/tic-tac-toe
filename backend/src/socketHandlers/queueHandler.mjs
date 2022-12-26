@@ -15,12 +15,7 @@ const SERVER_EVENT = Object.freeze({
 });
 
 export const queueHandler = (client) => {
-  const onEnterQueue = ({ playerUid, playerName }) => {
-    if (!clientController.isPlayer(playerUid)) {
-      client.emit(SERVER_EVENT.NO_NAME, {});
-      return;
-    }
-
+  const onEnterQueue = (client) => {
     const opponent = queueController.takeFirst();
     if (!opponent) {
       queueController.add(client);
@@ -52,8 +47,9 @@ export const queueHandler = (client) => {
       client.emit(SERVER_EVENT.NO_NAME, {});
       return;
     }
-    onEnterQueue(playerUid, playerName);
+    onEnterQueue(client);
   });
+
   client.on(CLIENT_EVENT.LEAVE_QUEUE, ({ playerUid, playerName }) => {
     if (!clientController.isPlayer(playerUid)) {
       client.emit(SERVER_EVENT.NO_NAME, {});
