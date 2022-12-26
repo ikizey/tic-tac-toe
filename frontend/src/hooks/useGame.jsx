@@ -7,6 +7,7 @@ const CLIENT_EVENT = Object.freeze({
   MOVE: 'move',
   CONCEDE: 'concede',
   LEAVE: 'leave',
+  IN_GAME: 'inGame',
 });
 
 const SERVER_EVENT = Object.freeze({
@@ -17,7 +18,7 @@ const SERVER_EVENT = Object.freeze({
 });
 
 export const useGame = () => {
-  const { playerUid, playerName } = useContext(PlayerContext);
+  const { playerUid } = useContext(PlayerContext);
 
   const [opponentName, setOpponentName] = useState('unknown');
   const [opponentID, setOpponentID] = useState('unknown');
@@ -49,11 +50,12 @@ export const useGame = () => {
   };
 
   useEffect(() => {
+    socket.emit(CLIENT_EVENT.IN_GAME, {});
+
     socket.on(
       SERVER_EVENT.INTRODUCTION,
       ({ player1Uid, player1Name, player2Uid, player2Name }) => {
         reset();
-
         if (player1Uid === playerUid) {
           setIsPlayerTurn(true);
           setOpponentName(player2Name);
@@ -72,9 +74,11 @@ export const useGame = () => {
     socket.on(SERVER_EVENT.MOVES, ({ moves }) => {
       setMoves(moves);
     });
+
     socket.on(SERVER_EVENT.GAME_OVER, ({ playerUid: pUid }) => {
       setIsWinner(pUid === undefined ? pUid : pUid === playerUid);
-      setIsPlayerTurn(false);
+
+      reset();
     });
 
     return () => {
@@ -83,7 +87,7 @@ export const useGame = () => {
       socket.off(SERVER_EVENT.MOVES);
       socket.off(SERVER_EVENT.GAME_OVER);
     };
-  });
+  }, []);
 
   return {
     opponentName,

@@ -22,13 +22,11 @@ export const queueHandler = (client) => {
       client.emit(SERVER_EVENT.IN_QUEUE, {});
       return;
     }
-
     try {
       const gameController = new GameController(client, opponent);
       [client, opponent].forEach((player) => {
         player.gameController = gameController;
       });
-      gameController.startGame();
     } catch (error) {
       client.emit(SERVER_EVENT.ERROR, { error: error.message });
     } finally {

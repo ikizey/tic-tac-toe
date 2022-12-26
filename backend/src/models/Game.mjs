@@ -98,7 +98,8 @@ export class Game {
   }
 
   get currentPlayer() {
-    const movesTotal = this.moves.length;
+    const movesTotal = this.#allMoves.length;
+    console.log(`moves total: ${movesTotal}`);
     const uid = movesTotal % 2 === 0 ? this.#p1uid : this.#p2uid;
     return this.#players.get(uid);
   }
@@ -115,7 +116,7 @@ export class Game {
 
   makeMove = (index) => {
     if (this.#allMoves.has(index)) return;
-    if (!grid.contains(index)) return;
+    if (!grid.includes(index)) return;
     if (this.#winnerUid !== null) return;
 
     this.#currentPlayerMoves.add(index);

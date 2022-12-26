@@ -10,6 +10,7 @@ const SERVER_EVENT = Object.freeze({
   IN_QUEUE: 'inQueue',
   OUT_QUEUE: 'outQueue',
   QUEUE_ERROR: 'queueError',
+  GAME_BEGINS: 'gameBegins',
 });
 
 const CLIENT_EVENT = Object.freeze({
@@ -63,6 +64,10 @@ const useLobby = () => {
       setIsInQueue(false);
     });
 
+    socket.on(SERVER_EVENT.GAME_BEGINS, () => {
+      navigate('/game');
+    });
+
     return () => {
       socket.off(SERVER_EVENT.NO_NAME);
       socket.off(SERVER_EVENT.TOTAL_PLAYERS);
@@ -70,6 +75,7 @@ const useLobby = () => {
       socket.off(SERVER_EVENT.IN_QUEUE);
       socket.off(SERVER_EVENT.QUEUE_ERROR);
       socket.off(SERVER_EVENT.OUT_QUEUE);
+      socket.off(SERVER_EVENT.GAME_BEGINS);
     };
   }, []);
 

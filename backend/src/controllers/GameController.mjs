@@ -3,6 +3,7 @@ import { grid } from '../models/grid.mjs';
 import { clientController } from './ClientController.mjs';
 
 const SERVER_EVENT = Object.freeze({
+  GAME_BEGINS: 'gameBegins',
   INTRODUCTION: 'introduction',
   TURN: 'turn',
   MOVES: 'moves',
@@ -18,6 +19,7 @@ const MARK = Object.freeze({
 export class GameController {
   #game;
   #players;
+  #ready = 0;
 
   constructor(...clients) {
     if (clients.length !== 2) {
@@ -26,10 +28,14 @@ export class GameController {
     const game = new Game(...clients);
     this.#game = game;
     this.#players = [this.#game.currentPlayer, this.#game.opponent];
+    this.#announce(SERVER_EVENT.GAME_BEGINS, {});
   }
 
   #announce = (type, data) => {
-    this.#players.emit(type, data);
+    this.#players.forEach((player) => {
+      console.log(`announce ${type} to player ${player.name} (${player.uid})`);
+      player.emit(type, data);
+    });
   };
 
   #isCurrentPlayer = (client) => {
@@ -40,7 +46,15 @@ export class GameController {
     this.#game = null;
   };
 
-  startGame = () => {
+  onInGame = () => {
+    //TODO! VERY BAD SOLUTION; REDO
+    this.#ready += 1;
+    if (this.#ready === 2) {
+      this.#startGame();
+    }
+  };
+
+  #startGame = () => {
     this.#announce(SERVER_EVENT.INTRODUCTION, {
       player1Uid: this.#players[0].uid,
       player1Name: this.#players[0].name,
