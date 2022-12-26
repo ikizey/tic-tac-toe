@@ -8,14 +8,14 @@ import { grid } from './grid.mjs';
 */
 
 const winPositions = [
-  Set([0, 1, 2]),
-  Set([3, 4, 5]),
-  Set([6, 7, 8]),
-  Set([0, 3, 6]),
-  Set([1, 4, 7]),
-  Set([2, 5, 8]),
-  Set([0, 4, 8]),
-  Set([2, 4, 6]),
+  new Set([0, 1, 2]),
+  new Set([3, 4, 5]),
+  new Set([6, 7, 8]),
+  new Set([0, 3, 6]),
+  new Set([1, 4, 7]),
+  new Set([2, 5, 8]),
+  new Set([0, 4, 8]),
+  new Set([2, 4, 6]),
 ];
 
 const isSuperset = (set, subset) => {
