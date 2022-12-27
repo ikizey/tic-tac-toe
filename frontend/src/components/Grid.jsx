@@ -1,23 +1,32 @@
-import { Grid as cGrid, GridItem } from '@chakra-ui/react';
+import { Box, Grid as CGrid, GridItem } from '@chakra-ui/react';
 import Mark from './Mark';
 
 const Grid = ({ moves, makeMove }) => {
   return (
-    <cGrid templateColumns='repeat(3, 1fr)' gap={6}>
+    <CGrid templateColumns='repeat(3, 1fr)' gap={0}>
       {moves.map((move, index) => (
         <GridItem
           key={index}
-          w='100%'
-          h='20'
-          bg='grey.100'
           onClick={() => {
             move === '' && makeMove(index);
           }}
         >
-          <Mark move={move} />
+          <Box
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
+            border='1px'
+            borderWidth='1'
+            borderColor='purple'
+            w='20'
+            h='20'
+            color='white'
+          >
+            <Mark move={move} />
+          </Box>
         </GridItem>
       ))}
-    </cGrid>
+    </CGrid>
   );
 };
 
