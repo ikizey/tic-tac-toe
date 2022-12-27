@@ -1,8 +1,8 @@
-import { Text } from '@chakra-ui/react';
+import { HStack, Text } from '@chakra-ui/react';
 
 const Vs = ({ player1, player2 }) => {
   return (
-    <>
+    <HStack>
       <Text color='purple' size='md'>
         {player1}
       </Text>
@@ -12,7 +12,7 @@ const Vs = ({ player1, player2 }) => {
       <Text color='red' size='md'>
         {player2}
       </Text>
-    </>
+    </HStack>
   );
 };
 
