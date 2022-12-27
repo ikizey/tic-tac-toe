@@ -17,7 +17,7 @@ const SERVER_EVENT = Object.freeze({
 export const queueHandler = (client) => {
   const onEnterQueue = (client) => {
     const opponent = queueController.takeFirst();
-    if (!opponent) {
+    if (!opponent || opponent.id === client.id) {
       queueController.add(client);
       client.emit(SERVER_EVENT.IN_QUEUE, {});
       return;
