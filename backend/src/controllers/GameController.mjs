@@ -95,8 +95,8 @@ export class GameController {
   };
 
   concede = (client) => {
-    if (this.#game.gameIsOver) return;
-    this.#game.concede(client);
+    if (this.#game?.gameIsOver) return;
+    this.#game?.concede(client);
     this.#announce(SERVER_EVENT.GAME_OVER, { playerUid: this.#game.winnerUid });
     this.#killGame();
   };
