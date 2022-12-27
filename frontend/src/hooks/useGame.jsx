@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { socket } from '../socket.config';
+import { default_moves } from '../models/grid';
 import { PlayerContext } from '../store/playerContext';
 
 const CLIENT_EVENT = Object.freeze({
@@ -23,7 +24,7 @@ export const useGame = () => {
   const [opponentName, setOpponentName] = useState('unknown');
   const [opponentID, setOpponentID] = useState('unknown');
   const [isWinner, setIsWinner] = useState(null);
-  const [moves, setMoves] = useState([''.repeat(8)]);
+  const [moves, setMoves] = useState(default_moves);
   const [isPlayerTurn, setIsPlayerTurn] = useState(false);
 
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export const useGame = () => {
     setOpponentName('unknown');
     setOpponentID('unknown');
     setIsWinner(null);
-    setMoves([''.repeat(8)]);
+    setMoves(default_moves);
     setIsPlayerTurn(false);
   };
 
