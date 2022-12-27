@@ -21,14 +21,16 @@ const Game = () => {
   } = useGame();
   return (
     <Container>
-      <VStack justify='center' spacing={5} height='100vh'>
+      <VStack justify='center' spacing={1} height='100vh'>
         <GameStatus isWinner={isWinner} />
         <Vs player1={playerName} player2={opponentName} />
-        <Turn
-          isPlayerTurn={isPlayerTurn}
-          playerName={playerName}
-          opponentName={opponentName}
-        />
+        {isWinner === null && (
+          <Turn
+            isPlayerTurn={isPlayerTurn}
+            playerName={playerName}
+            opponentName={opponentName}
+          />
+        )}
         <Grid moves={moves} makeMove={makeMove} />
         <EndGame isWinner={isWinner} concede={concede} leave={leave} />
       </VStack>
