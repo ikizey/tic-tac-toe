@@ -19,10 +19,18 @@ export const gameHandler = (client) => {
   });
 
   client.on(CLIENT_EVENT.MOVE, ({ index }) => {
+    if (!client.gameController) {
+      client.emit(SERVER_EVENT.LEFT_GAME, {});
+      return;
+    }
     client.gameController.makeMove(client, index);
   });
 
   client.on(CLIENT_EVENT.CONCEDE, () => {
+    if (!client.gameController) {
+      client.emit(SERVER_EVENT.LEFT_GAME, {});
+      return;
+    }
     client.gameController.concede(client);
   });
 

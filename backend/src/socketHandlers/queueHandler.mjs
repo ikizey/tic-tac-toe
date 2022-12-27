@@ -11,10 +11,11 @@ const SERVER_EVENT = Object.freeze({
   NO_NAME: 'noName',
   IN_QUEUE: 'inQueue',
   OUT_QUEUE: 'outQueue',
+  TOTAL_GAMES: 'totalGames',
   ERROR: 'error',
 });
 
-export const queueHandler = (client) => {
+export const queueHandler = (client, io) => {
   const onEnterQueue = (client) => {
     const opponent = queueController.takeFirst();
     if (!opponent || opponent.id === client.id) {
@@ -26,6 +27,10 @@ export const queueHandler = (client) => {
       const gameController = new GameController(client, opponent);
       [client, opponent].forEach((player) => {
         player.gameController = gameController;
+      });
+
+      io.emit(SERVER_EVENT.TOTAL_GAMES, {
+        totalGames: clientController.totalGames,
       });
     } catch (error) {
       client.emit(SERVER_EVENT.ERROR, { error: error.message });

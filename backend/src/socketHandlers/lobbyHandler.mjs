@@ -2,7 +2,6 @@ import { clientController } from '../controllers/ClientController.mjs';
 
 const CLIENT_EVENT = Object.freeze({
   IN_LOBBY: 'inLobby',
-  IN_QUEUE: 'inQueue',
 });
 
 const SERVER_EVENT = Object.freeze({
@@ -26,8 +25,13 @@ export const lobbyHandler = (client, io) => {
     client.name = playerName;
     client.uid = playerUid;
     clientController.addClient(client);
+
     io.emit(SERVER_EVENT.TOTAL_PLAYERS, {
       totalPlayers: clientController.totalPlayers,
+    });
+
+    io.emit(SERVER_EVENT.TOTAL_GAMES, {
+      totalGames: clientController.totalGames,
     });
   });
 };

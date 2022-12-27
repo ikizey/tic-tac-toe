@@ -24,6 +24,14 @@ class ClientController {
     return this.#clients.size;
   }
 
+  get totalGames() {
+    return (
+      [...this.#clients.values()]
+        .map((client) => client?.gameController)
+        .filter((gameController) => gameController !== undefined).length / 2
+    );
+  }
+
   isPlayer(playerUid) {
     return !!this.#clients.get(playerUid);
   }

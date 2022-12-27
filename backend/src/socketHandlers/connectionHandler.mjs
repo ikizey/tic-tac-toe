@@ -10,5 +10,5 @@ export const connectionHandler = (client, io) => {
   disconnectHandler(client);
   gameHandler(client);
   lobbyHandler(client, io);
-  queueHandler(client);
+  queueHandler(client, io);
 };

@@ -48,7 +48,7 @@ const useLobby = () => {
     });
 
     socket.on(SERVER_EVENT.TOTAL_GAMES, ({ totalGames }) => {
-      setTotalGames(totalGames);
+      setTotalGames(Math.floor(totalGames));
     });
 
     socket.on(SERVER_EVENT.IN_QUEUE, () => {
