@@ -10,8 +10,7 @@ const Lobby = () => {
 
   return (
     <Container centerContent>
-      <VStack align='center' spacing={5} height='100vh'>
-        //TODO ** for some reason it's not centered vertically
+      <VStack justify='center' spacing={5} height='100vh'>
         <InQueue isInQueue={isInQueue} />
         <OnlineStats totalGames={totalGames} totalPlayers={totalPlayers} />
         <Button

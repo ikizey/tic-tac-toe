@@ -21,7 +21,7 @@ const Game = () => {
   } = useGame();
   return (
     <Container>
-      <VStack>
+      <VStack justify='center' spacing={5} height='100vh'>
         <GameStatus isWinner={isWinner} />
         <Vs player1={playerName} player2={opponentName} />
         <Turn

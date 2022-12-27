@@ -24,7 +24,7 @@ const Home = () => {
 
   return (
     <Container centerContent>
-      <VStack spacing={5}>
+      <VStack justify='center' spacing={5} height='100vh'>
         <Heading as='h2' size='xl' noOfLines={1}>
           Welcome to Tic Tac Toe game!
         </Heading>
