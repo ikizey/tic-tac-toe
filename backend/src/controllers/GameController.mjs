@@ -33,7 +33,6 @@ export class GameController {
 
   #announce = (type, data) => {
     this.#players.forEach((player) => {
-      console.log(`announce ${type} to player ${player.name} (${player.uid})`);
       player.emit(type, data);
     });
   };
