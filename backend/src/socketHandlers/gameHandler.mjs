@@ -11,8 +11,9 @@ const CLIENT_EVENT = Object.freeze({
 
 export const gameHandler = (client) => {
   client.on(CLIENT_EVENT.IN_GAME, () => {
-    if (!client.name) {
-      client.emit('noName', {});
+    if (!client.gameController) {
+      client.emit(SERVER_EVENT.LEFT_GAME, {});
+      return;
     }
     client.gameController.onInGame(client.uid);
   });
