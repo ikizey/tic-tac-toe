@@ -1,7 +1,12 @@
 class QueueController {
   #queue = [];
 
+  inQueue = (player) =>
+    this.#queue.filter((qPlayer) => qPlayer.uid === player.uid).length !== 0;
+
   add = (player) => {
+    if (inQueue(player)) return;
+
     this.#queue.unshift(player);
   };
 
