@@ -48,6 +48,10 @@ export class Game {
     this.#p2uid = p2uid;
   }
 
+  get orderedPlayers() {
+    return [this.#players.get(this.#p1uid), this.#players.get(this.#p2uid)];
+  }
+
   get #currentPlayerMoves() {
     return this.currentPlayer.uid === this.#p1uid
       ? this.#p1moves

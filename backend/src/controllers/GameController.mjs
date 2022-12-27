@@ -27,7 +27,7 @@ export class GameController {
     }
     const game = new Game(...clients);
     this.#game = game;
-    this.#players = [this.#game.currentPlayer, this.#game.opponent];
+    this.#players = this.#game.orderedPlayers;
     this.#announce(SERVER_EVENT.GAME_BEGINS, {});
   }
 
