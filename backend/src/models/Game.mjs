@@ -78,7 +78,7 @@ export class Game {
 
     winPositions.forEach((position) => {
       if (isSuperset(this.#opponentMoves, position)) {
-        this.#winnerUid = this.opponent;
+        this.#winnerUid = this.opponent.uid;
         return;
       }
     });
@@ -90,9 +90,9 @@ export class Game {
   };
 
   #getOppositePlayerUid = (playerUid) => {
-    return (oppositePlayerUid = this.#players
+    return [...this.#players.keys()]
       .map((player) => player.uid)
-      .filter((uid) => uid !== playerUid));
+      .filter((uid) => uid !== playerUid)[0];
   };
 
   get gameIsOver() {
@@ -101,13 +101,12 @@ export class Game {
     return false;
   }
 
-  get winner() {
-    return this.#players.get(this.#winnerUid);
+  get winnerUid() {
+    return this.#winnerUid;
   }
 
   get currentPlayer() {
     const movesTotal = this.#allMoves.size;
-    console.log(`moves total: ${movesTotal}`);
     const uid = movesTotal % 2 === 0 ? this.#p1uid : this.#p2uid;
     return this.#players.get(uid);
   }

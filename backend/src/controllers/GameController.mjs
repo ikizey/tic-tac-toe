@@ -82,16 +82,17 @@ export class GameController {
     });
     this.#announce(SERVER_EVENT.MOVES, { moves });
 
-    this.#announce(SERVER_EVENT.TURN, {
-      playerUid: this.#game.currentPlayer.uid,
-    });
-
     if (this.#game.gameIsOver) {
       this.#announce(SERVER_EVENT.GAME_OVER, {
         playerUid: this.#game.winnerUid,
       });
       this.#killGame();
+      return;
     }
+
+    this.#announce(SERVER_EVENT.TURN, {
+      playerUid: this.#game.currentPlayer.uid,
+    });
   };
 
   concede = (client) => {
