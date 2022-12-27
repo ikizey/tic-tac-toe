@@ -3,7 +3,7 @@ import { Text } from '@chakra-ui/react';
 const InQueue = ({ isInQueue }) => {
   return (
     isInQueue && (
-      <Text colorScheme='purple' size='md'>
+      <Text color='purple' size='md'>
         Waiting for opponent...
       </Text>
     )

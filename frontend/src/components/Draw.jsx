@@ -1,7 +1,7 @@
 import { Text } from '@chakra-ui/react';
 
 const Draw = () => {
-  return <Text colorScheme='green'>Draw!</Text>;
+  return <Text color='green'>Draw!</Text>;
 };
 
 export default Draw;
