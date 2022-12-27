@@ -64,6 +64,10 @@ export class Game {
     return new Set([...this.#p1moves, ...this.#p2moves]);
   }
 
+  get #hasWinner() {
+    return this.#winnerUid !== null;
+  }
+
   #checkWinner = () => {
     // we check after move is made, so player, who just made a move is opponent now.
     if (this.#opponentMoves.length < 3) return;
@@ -75,7 +79,7 @@ export class Game {
       }
     });
 
-    if (this.#allMoves.length === 9) {
+    if (this.#allMoves.size === 9) {
       this.#winnerUid = undefined;
       return;
     }
@@ -88,7 +92,7 @@ export class Game {
   };
 
   get gameIsOver() {
-    if (this.#winnerUid !== null) return true;
+    if (this.#hasWinner) return true;
 
     return false;
   }
@@ -98,7 +102,7 @@ export class Game {
   }
 
   get currentPlayer() {
-    const movesTotal = this.#allMoves.length;
+    const movesTotal = this.#allMoves.size;
     console.log(`moves total: ${movesTotal}`);
     const uid = movesTotal % 2 === 0 ? this.#p1uid : this.#p2uid;
     return this.#players.get(uid);
@@ -117,7 +121,7 @@ export class Game {
   makeMove = (index) => {
     if (this.#allMoves.has(index)) return;
     if (!grid.includes(index)) return;
-    if (this.#winnerUid !== null) return;
+    if (this.#hasWinner) return;
 
     this.#currentPlayerMoves.add(index);
     this.#checkWinner();
