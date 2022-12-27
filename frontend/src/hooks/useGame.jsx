@@ -16,6 +16,7 @@ const SERVER_EVENT = Object.freeze({
   TURN: 'turn',
   MOVES: 'moves',
   GAME_OVER: 'gameOver',
+  LEFT_GAME: 'leftGame',
 });
 
 export const useGame = () => {
@@ -29,21 +30,12 @@ export const useGame = () => {
 
   const navigate = useNavigate();
 
-  const reset = () => {
-    setOpponentName('unknown');
-    setOpponentID('unknown');
-    setIsWinner(null);
-    setMoves(default_moves);
-    setIsPlayerTurn(false);
-  };
-
   const makeMove = (index) => {
     socket.emit(CLIENT_EVENT.MOVE, { index });
   };
 
   const concede = () => {
     socket.emit(CLIENT_EVENT.CONCEDE, {});
-    navigate('/lobby');
   };
 
   const leave = () => {
@@ -56,7 +48,6 @@ export const useGame = () => {
     socket.on(
       SERVER_EVENT.INTRODUCTION,
       ({ player1Uid, player1Name, player2Uid, player2Name }) => {
-        reset();
         if (player1Uid === playerUid) {
           setIsPlayerTurn(true);
           setOpponentName(player2Name);
@@ -78,8 +69,10 @@ export const useGame = () => {
 
     socket.on(SERVER_EVENT.GAME_OVER, ({ playerUid: pUid }) => {
       setIsWinner(pUid === undefined ? pUid : pUid === playerUid);
+    });
 
-      reset();
+    socket.on(SERVER_EVENT.LEFT_GAME, () => {
+      navigate('/lobby');
     });
 
     return () => {
