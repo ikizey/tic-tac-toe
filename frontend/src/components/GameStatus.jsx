@@ -1,7 +1,7 @@
 import Defeat from './Defeat';
-import Draw from './Defeat';
-import GameIsOn from './Defeat';
-import Victory from './Defeat';
+import Draw from './Draw';
+import GameIsOn from './GameIsOn';
+import Victory from './Victory';
 
 const GameStatus = ({ isWinner }) => {
   if (isWinner === null) {
